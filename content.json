@@ -13,27 +13,7 @@
         {
             "thickness": 1e-6,
             "indexReal": 3,
-            "indexImag": 0.03
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 4,
-            "indexImag": 0.04
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 5,
-            "indexImag": 0.05
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 6,
-            "indexImag": 0.06
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 7,
-            "indexImag": 0.07
+            "indexImag": 0.8
         }
     ],
     "source": {
