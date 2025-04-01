@@ -30,7 +30,7 @@ Device::~Device()
 
 void Device::showLayers()
 {
-	std::cout << "LayerNum\tthickness(um)\tIndex(Re)\tIndex(Im)\n";
+	std::cout << "\nLayerNum\tthickness(um)\tIndex(Re)\tIndex(Im)\n";
 	for (int i = 0; i < layersNum; i++)
 	{
 		std::cout << i + 1;

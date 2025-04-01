@@ -13,6 +13,7 @@
 #include <iostream>
 #include <complex>
 #include <nlohmann/json.hpp>
+#include <ctime>
 
 using arma::pow;
 using arma::join_cols;

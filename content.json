@@ -7,8 +7,8 @@
         },
         {
             "thickness": 1e-6,
-            "indexReal": 2,
-            "indexImag": 0.02
+            "indexReal": 1,
+            "indexImag": 0.01
         },
         {
             "thickness": 1e-6,
@@ -17,7 +17,7 @@
         }
     ],
     "source": {
-        "theta": 75,
+        "theta": 75,        
         "lambda": 0.8e-6
     }
 }
