@@ -1,6 +1,7 @@
 #pragma once
 
 #include <armadillo>
+#include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -11,6 +12,7 @@
 #include <cmath>
 #include <iostream>
 #include <complex>
+#include <nlohmann/json.hpp>
 
 using arma::pow;
 using arma::join_cols;
@@ -31,6 +33,9 @@ using arma::expmat;
 using std::real;
 using std::cout;
 using std::endl;
+using std::string;
+using std::ifstream;
+using nlohmann::json;
 
 
 const double pi = 3.1415926535897932384626433832795;
@@ -40,20 +45,6 @@ const cx_mat Identity(2, 2, eye);
 const cx_mat Zero(2, 2, zeros);
 const double c0 = 299792458;
 
-struct  Layer
-{
-	double thickness;
-	double indexReal;
-	double indexImg;
-};
-
-
-struct Source
-{
-	double theta = 0;
-	double lambda = 1.55e-6;
-	double frequency = c0 / 1.55e-6;
-};
 
 //struct Result
 //{
@@ -67,4 +58,12 @@ struct  Smatrix
 	cx_mat  S12 = Identity;
 	cx_mat  S21 = Identity;
 	cx_mat  S22 = Zero;
+};
+
+struct UserJson
+{
+	cx_colvec Index;
+	colvec thickness;
+	double theta;
+	double lambda;
 };

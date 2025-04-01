@@ -5,19 +5,17 @@
 class Device
 {
 private:
-	// 初始化
-	int layersNum;
-
-	Source source;
+	// 构造初始化
+	size_t layersNum;
 	cx_colvec Index;
 	cx_colvec ER;
 	colvec L;
 	double Lambda;
 	double theta;
-	cx_colvec k_unit ;
+	double frequency;
 
+	colvec k_unit;
 	cx_double er_inc;
-
 	cx_double ur_inc;
 	double k0;
 	cx_double kinc;
@@ -70,19 +68,13 @@ private:
 	cx_mat Btrn;
 	Smatrix Strn;
 
-	// RT solve
-	// colvec s , p ;
-	// mat pol, esrc;
-	// rowvec Exref, Eyref, Extrn, Eytrn;
-	// cx_mat erf, etrn , Exref;
-
 
 public:
 
-	Device(Layer multilayer[], int layersNum, Source source);
-
+	Device(UserJson& dataIn);
 	Device();
 	~Device();
+
 	void showLayers();
 
 	void initialize();
@@ -98,9 +90,6 @@ public:
 	void TransmissionSlove();
 
 	void RTsolve();
-
-
-
 
 };
 

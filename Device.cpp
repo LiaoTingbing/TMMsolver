@@ -2,24 +2,20 @@
 #include "userFunc.h"
 
 
-Device::Device(Layer multilayer[], int layersNum, Source source)
+Device::Device(UserJson& dataIn)
 {
-	this->layersNum = layersNum;
+	this->layersNum = dataIn.Index.size();
+	this->Index = dataIn.Index;
+	this->L = dataIn.thickness;
+	this->theta = dataIn.theta * pi / 180.0;
+	this->Lambda = dataIn.lambda;
+	this->frequency = c0 / Lambda;
 
-	L = colvec(layersNum, zeros);
-	Index = cx_colvec(layersNum, zeros);
+	//cout << Lambda;
+	//cout << theta;
+	//L.print();
+	//Index.print();
 
-	for (int i = 0; i < layersNum; i++)
-	{
-		this->L(i) = multilayer[i].thickness;
-		this->Index(i) = multilayer[i].indexReal + I * multilayer[i].indexImg;
-	}
-
-	//this->source = source;
-
-	this->source.lambda = source.lambda;
-	this->source.frequency = c0 / source.lambda;
-	this->source.theta = source.theta * pi / 180.0;
 }
 
 Device::Device()
@@ -34,30 +30,27 @@ Device::~Device()
 
 void Device::showLayers()
 {
-	std::cout << "层数\t厚度\t实部\t虚部\n";
+	std::cout << "LayerNum\tthickness(um)\tIndex(Re)\tIndex(Im)\n";
 	for (int i = 0; i < layersNum; i++)
 	{
 		std::cout << i + 1;
-		std::cout << "\t";
-		std::cout << L(i);
-		std::cout << "\t";
+		std::cout << "\t\t";
+		std::cout << L(i) * 1e6;
+		std::cout << "\t\t";
 		std::cout << Index(i).real();
-		std::cout << "\t";
+		std::cout << "\t\t";
 		std::cout << Index(i).imag();
-		std::cout << "\n";
+		std::cout << endl;
 	}
- 
 }
 
 void Device::initialize()
 {
 	ER = pow(Index, 2.0);
-	Lambda = source.lambda;
+	//ER.print();
 	k0 = 2.0 * pi / Lambda;
-	theta = source.theta;
 	k_unit = { sin(theta) , 0 , cos(theta) };
 	//k_unit.print();
-
 	//Global.S22.print();
 }
 
@@ -65,7 +58,7 @@ void Device::Incidence()
 {
 	er_inc = ER(0);
 	ur_inc = 1.0;
-	k0 = 2.0 * pi / Lambda;
+	//k0 = 2.0 * pi / Lambda;
 	kinc = k0 * sqrt(er_inc * ur_inc);
 	kinc_vector = kinc * k_unit;
 	kx_ = kinc_vector(0) / k0;
@@ -81,7 +74,7 @@ void Device::Gap()
 	Qg(1, 0) = -(1.0 + kx_ * kx_);
 	Qg(1, 1) = -(kx_ * ky_);
 	//Qg.print();              // QG OK
-	Vg = -I * Qg;      
+	Vg = -I * Qg;
 	//Vg.print();           Vg  OK
 }
 
@@ -108,15 +101,23 @@ void Device::ReflectionSolve()
 	Sref.S21 = 0.5 * (Aref - Bref * inv(Aref) * Bref);
 	Sref.S22 = Bref * inv(Aref);
 
-	//Sref.S22.print();         Sref Ok
+	//Sref.S11.print();  
+	//Sref.S12.print();
+	//Sref.S21.print();
+	//Sref.S22.print();
 
-	Global = SconnectRight(Global, Sref);
 	//Global.S11.print();
 	//Global.S12.print();
 	//Global.S21.print();
 	//Global.S22.print();
 
- 
+
+	Global = SconnectRight(Global, Sref);
+
+	//Global.S11.print();
+	//Global.S12.print();
+	//Global.S21.print();
+	//Global.S22.print();
 
 }
 
@@ -124,7 +125,7 @@ void Device::LayerSolve()
 {
 
 	Q = cx_mat(2, 2, zeros);
-	for (int i = 0; i < layersNum; i++)
+	for (size_t i = 0; i < layersNum; i++)
 	{
 		er_layer = ER(i);
 		ur_layer = 1.0;
@@ -166,6 +167,10 @@ void Device::LayerSolve()
 
 void Device::TransmissionSlove()
 {
+	//Global.S11.print();
+	//Global.S12.print();
+	//Global.S21.print();
+	//Global.S22.print();
 	er_trn = ER(layersNum - 1);
 	ur_trn = 1.0;
 	kz_trn = sqrt(ur_trn * er_trn - kx_ * kx_ - ky_ * ky_);
@@ -214,7 +219,7 @@ void Device::RTsolve()
 
 	cx_mat Eref = join_cols(Exref, Eyref, Ezref);
 	cx_mat Etrn = join_cols(Extrn, Eytrn, Eztrn);
-	rowvec R = vectornorm(Eref );
+	rowvec R = vectornorm(Eref);
 	rowvec T = vectornorm(Etrn) * real(kz_trn / ur_trn) / real(kz_inc / ur_inc);
 
 	double Rs = R(0);
@@ -223,9 +228,9 @@ void Device::RTsolve()
 	double Ts = T(0);
 	double Tp = T(1);
 
-	cout << "\n\n\n结果是" << endl;
-	cout << Rs << "+" << Ts << "=" << Rs + Ts << endl;
-	cout << Rp << "+" << Tp << "=" << Rp + Tp << endl;
+	cout << "Result：" << endl;
+	cout << "Rs" << "+" << "Ts" << "=" << Rs << "+" << Ts << "=" << Rs + Ts << endl;
+	cout << "Rp" << "+" << "Tp" << "=" << Rp << "+" << Tp << "=" << Rp + Tp << endl;
 
 }
 
