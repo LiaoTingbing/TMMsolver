@@ -38,31 +38,54 @@ Visual Studio 2022安装Armadillo
 
 ### 用法
 器件结构的输入文件为content.json，数据结构如下
-	
-	{
+```
+{
     "device": [
         {
             "thickness": 1e-6,
             "indexReal": 1,
-            "indexImag": 0.01
+            "indexImag": 0.1
         },
         {
             "thickness": 1e-6,
-            "indexReal": 1,
-            "indexImag": 0.01
+            "indexReal": 2,
+            "indexImag": 0.2
         },
-        ...
         {
             "thickness": 1e-6,
             "indexReal": 3,
-            "indexImag": 0.8
+            "indexImag": 0.3
+        },
+        {
+            "thickness": 1e-6,
+            "indexReal": 4,
+            "indexImag": 0.4
+        },
+        {
+            "thickness": 1e-6,
+            "indexReal": 5,
+            "indexImag": 0.5
+        },
+        {
+            "thickness": 1e-6,
+            "indexReal": 6,
+            "indexImag": 0.6
+        },
+        {
+            "thickness": 1e-6,
+            "indexReal": 7,
+            "indexImag": 0.7
         }
     ],
     "source": {
-        "theta": 75, 
-        "lambda": 0.8e-6
+        "theta": 30,        
+        "lambda": 1.55e-6
     }
 }
+
+
+```
+
 
 ## 测试结果
 
