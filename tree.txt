@@ -1,0 +1,96 @@
+卷 数据盘 的文件夹 PATH 列表
+卷序列号为 7867-A857
+E:.
+│  .gitattributes
+│  .gitignore
+│  common.h
+│  content.json
+│  Device.cpp
+│  Device.h
+│  main.cpp
+│  README.md
+│  TMM.sln
+│  TMM.vcxproj
+│  TMM.vcxproj.filters
+│  TMM.vcxproj.user
+│  tree.txt
+│  userFunc.cpp
+│  userFunc.h
+│  
+├─images
+│      p1.png
+│      新建 Microsoft PowerPoint 演示文稿.png
+│      新建 Microsoft PowerPoint 演示文稿.pptx
+│      
+├─src
+├─TMM
+│  └─x64
+│      ├─Debug
+│      │  │  Device.obj
+│      │  │  main.obj
+│      │  │  TMM.exe.recipe
+│      │  │  TMM.ilk
+│      │  │  TMM.log
+│      │  │  TMM.vcxproj.FileListAbsolute.txt
+│      │  │  userFunc.obj
+│      │  │  vc143.idb
+│      │  │  vc143.pdb
+│      │  │  vcpkg.applocal.log
+│      │  │  
+│      │  └─TMM.tlog
+│      │          CL.command.1.tlog
+│      │          Cl.items.tlog
+│      │          CL.read.1.tlog
+│      │          CL.write.1.tlog
+│      │          link.command.1.tlog
+│      │          link.read.1.tlog
+│      │          link.secondary.1.tlog
+│      │          link.write.1.tlog
+│      │          TMM.lastbuildstate
+│      │          TMM.write.1u.tlog
+│      │          
+│      └─Release
+│          │  Device.obj
+│          │  main.obj
+│          │  TMM.exe.recipe
+│          │  TMM.iobj
+│          │  TMM.ipdb
+│          │  TMM.log
+│          │  TMM.vcxproj.FileListAbsolute.txt
+│          │  userFunc.obj
+│          │  vc143.pdb
+│          │  vcpkg.applocal.log
+│          │  
+│          └─TMM.tlog
+│                  CL.command.1.tlog
+│                  Cl.items.tlog
+│                  CL.read.1.tlog
+│                  CL.write.1.tlog
+│                  link.command.1.tlog
+│                  link.read.1.tlog
+│                  link.secondary.1.tlog
+│                  link.write.1.tlog
+│                  TMM.lastbuildstate
+│                  TMM.write.1u.tlog
+│                  
+└─x64
+    ├─Debug
+    │      libgcc_s_seh-1.dll
+    │      libgfortran-5.dll
+    │      liblapack.dll
+    │      libquadmath-0.dll
+    │      libwinpthread-1.dll
+    │      openblas.dll
+    │      TMM.exe
+    │      TMM.pdb
+    │      
+    └─Release
+            libgcc_s_seh-1.dll
+            libgfortran-5.dll
+            liblapack.dll
+            libquadmath-0.dll
+            libwinpthread-1.dll
+            openblas.dll
+            TMM.exe
+            TMM.pdb
+            
