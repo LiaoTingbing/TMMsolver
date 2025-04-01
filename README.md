@@ -22,99 +22,17 @@ Visual Studio 2022安装Armadillo
 ### 文件目录说明
 
 ```
-    E:.
-│  .gitattributes
-│  .gitignore
-│  common.h
-│  content.json
-│  Device.cpp
-│  Device.h
-│  main.cpp
-│  README.md
-│  TMM.sln
-│  TMM.vcxproj
-│  TMM.vcxproj.filters
-│  TMM.vcxproj.user
-│  tree.txt
-│  userFunc.cpp
-│  userFunc.h
-│  
 ├─images
-│      p1.png
-│      新建 Microsoft PowerPoint 演示文稿.png
-│      新建 Microsoft PowerPoint 演示文稿.pptx
-│      
 ├─src
 ├─TMM
 │  └─x64
 │      ├─Debug
-│      │  │  Device.obj
-│      │  │  main.obj
-│      │  │  TMM.exe.recipe
-│      │  │  TMM.ilk
-│      │  │  TMM.log
-│      │  │  TMM.vcxproj.FileListAbsolute.txt
-│      │  │  userFunc.obj
-│      │  │  vc143.idb
-│      │  │  vc143.pdb
-│      │  │  vcpkg.applocal.log
-│      │  │  
 │      │  └─TMM.tlog
-│      │          CL.command.1.tlog
-│      │          Cl.items.tlog
-│      │          CL.read.1.tlog
-│      │          CL.write.1.tlog
-│      │          link.command.1.tlog
-│      │          link.read.1.tlog
-│      │          link.secondary.1.tlog
-│      │          link.write.1.tlog
-│      │          TMM.lastbuildstate
-│      │          TMM.write.1u.tlog
-│      │          
 │      └─Release
-│          │  Device.obj
-│          │  main.obj
-│          │  TMM.exe.recipe
-│          │  TMM.iobj
-│          │  TMM.ipdb
-│          │  TMM.log
-│          │  TMM.vcxproj.FileListAbsolute.txt
-│          │  userFunc.obj
-│          │  vc143.pdb
-│          │  vcpkg.applocal.log
-│          │  
 │          └─TMM.tlog
-│                  CL.command.1.tlog
-│                  Cl.items.tlog
-│                  CL.read.1.tlog
-│                  CL.write.1.tlog
-│                  link.command.1.tlog
-│                  link.read.1.tlog
-│                  link.secondary.1.tlog
-│                  link.write.1.tlog
-│                  TMM.lastbuildstate
-│                  TMM.write.1u.tlog
-│                  
 └─x64
     ├─Debug
-    │      libgcc_s_seh-1.dll
-    │      libgfortran-5.dll
-    │      liblapack.dll
-    │      libquadmath-0.dll
-    │      libwinpthread-1.dll
-    │      openblas.dll
-    │      TMM.exe
-    │      TMM.pdb
-    │      
     └─Release
-            libgcc_s_seh-1.dll
-            libgfortran-5.dll
-            liblapack.dll
-            libquadmath-0.dll
-            libwinpthread-1.dll
-            openblas.dll
-            TMM.exe
-            TMM.pdb
 ```
 
 
@@ -147,3 +65,36 @@ Visual Studio 2022安装Armadillo
 }
 
 ## 测试结果
+
+| Layer | thickness(um) | Index(Re) | Index(Im)|
+| ---|---|---|---|
+|  1| 1|1|0.1|
+|  2| 1|2|0.2|
+|  3| 1|3|0.3|
+|  4| 1|4|0.4|
+|  5| 1|5|0.5|
+|  6| 1|6|0.6|
+|  7| 1|7|0.7|
+
+使用TMMsolver的结果为
+![](images/result.png)
+
+
+
+| |C++| Lumerical |
+|---|---|---|
+|Rs|0.028934|0.028934|
+|Ts|1.45787e-10|1.45787e-10|
+|Rp|0.014718|0.014718|
+|Tp|1.56936e-10|1.56936e-10|
+ 
+
+ ```
+C++
+Rs+Ts=0.028934+1.45787e-10=0.028934
+Rp+Tp=0.014718+1.56936e-10=0.014718
+
+Lumerical
+Rs+Ts=0.028934 + 1.45787e-10 = 0.028934
+Rp+Tp=0.014718 + 1.56936e-10 = 0.014718
+```
