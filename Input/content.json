@@ -1,0 +1,37 @@
+﻿{
+    "device": [
+        {
+            "thickness": 1e-6,
+            "indexReal": 1,
+            "indexImag": 0
+        },
+        {
+            "thickness": 0.5e-6,
+            "indexReal": 1.4,
+            "indexImag":0
+        },
+        {
+            "thickness": 0.1e-6,
+            "indexReal": 3.4,
+            "indexImag": 0
+        },
+        {
+            "thickness": 0.5e-6,
+            "indexReal": 1.4,
+            "indexImag": 0
+        },
+        {
+            "thickness": 1e-6,
+            "indexReal": 0.05,
+            "indexImag": 3
+        }
+    ],
+    "source": {
+        "theta_min": 0,
+        "theta_max": 60,        
+        "theta_points":4,        
+        "lambda_min": 1e-6,
+        "lambda_max": 2e-6,
+        "lambda_points": 100
+    }
+}

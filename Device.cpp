@@ -4,17 +4,21 @@
 
 Device::Device(UserJson& dataIn)
 {
-	this->layersNum = dataIn.Index.size();
-	this->Index = dataIn.Index;
-	this->L = dataIn.thickness;
-	this->theta = dataIn.theta * pi / 180.0;
-	this->Lambda = dataIn.lambda;
-	this->frequency = c0 / Lambda;
+	layersNum = dataIn.Index.size();
+	Index = dataIn.Index;
+	L = dataIn.thickness;
+	double theta_min = dataIn.theta_min * pi / 180.0;
+	double theta_max = dataIn.theta_max * pi / 180.0;
+	int theta_points = dataIn.theta_points  ;
 
-	//cout << Lambda;
-	//cout << theta;
-	//L.print();
-	//Index.print();
+	double lambda_min = dataIn.lambda_min;
+	double lambda_max = dataIn.lambda_max;
+	int lambda_points = dataIn.lambda_points;
+
+	theta_list = linspace(theta_min, theta_max, theta_points);
+	lambda_list = linspace(lambda_min, lambda_max, lambda_points);
+	frequency_list = c0 / lambda_list;
+ 
 
 }
 
@@ -44,12 +48,14 @@ void Device::showLayers()
 	}
 }
 
-void Device::initialize()
+void Device::initialize(double theta  , double lambda)
 {
 	ER = pow(Index, 2.0);
 	//ER.print();
-	k0 = 2.0 * pi / Lambda;
+	k0 = 2.0 * pi / lambda;
 	k_unit = { sin(theta) , 0 , cos(theta) };
+	Global = { Zero , Identity , Identity  ,Zero };
+
 	//k_unit.print();
 	//Global.S22.print();
 }
@@ -68,7 +74,7 @@ void Device::Incidence()
 
 void Device::Gap()
 {
-	Qg = cx_mat(2, 2, zeros);
+	Qg = cx_mat(2, 2, fill::zeros);
 	Qg(0, 0) = kx_ * ky_;
 	Qg(0, 1) = 1.0 + ky_ * ky_;
 	Qg(1, 0) = -(1.0 + kx_ * kx_);
@@ -84,7 +90,7 @@ void Device::ReflectionSolve()
 	ur_ref = 1.0;
 
 	kz_ref = sqrt(ur_ref * er_ref - kx_ * kx_ - ky_ * ky_);
-	Qref = cx_mat(2, 2, zeros);
+	Qref = cx_mat(2, 2, fill::zeros);
 	Qref(0, 0) = 1.0 / ur_ref * (kx_ * ky_);
 	Qref(0, 1) = 1.0 / ur_ref * (er_ref * ur_ref - kx_ * kx_);
 	Qref(1, 0) = 1.0 / ur_ref * (ky_ * ky_ - ur_ref * er_ref);
@@ -112,7 +118,7 @@ void Device::ReflectionSolve()
 	//Global.S22.print();
 
 
-	Global = SconnectRight(Global, Sref);
+	 SconnectRight(Global, Sref);
 
 	//Global.S11.print();
 	//Global.S12.print();
@@ -124,7 +130,7 @@ void Device::ReflectionSolve()
 void Device::LayerSolve()
 {
 
-	Q = cx_mat(2, 2, zeros);
+	Q = cx_mat(2, 2, fill::zeros);
 	for (size_t i = 0; i < layersNum; i++)
 	{
 		er_layer = ER(i);
@@ -154,7 +160,7 @@ void Device::LayerSolve()
 		//LayerS.S22.print();
 		// OK
 
-		Global = SconnectRight(Global, LayerS);
+		  SconnectRight(Global, LayerS);
 
 		//Global.S11.print();
 		//Global.S12.print();
@@ -167,14 +173,11 @@ void Device::LayerSolve()
 
 void Device::TransmissionSlove()
 {
-	//Global.S11.print();
-	//Global.S12.print();
-	//Global.S21.print();
-	//Global.S22.print();
+ 
 	er_trn = ER(layersNum - 1);
 	ur_trn = 1.0;
 	kz_trn = sqrt(ur_trn * er_trn - kx_ * kx_ - ky_ * ky_);
-	Qtrn = cx_mat(2, 2, zeros);
+	Qtrn = cx_mat(2, 2, fill::zeros);
 	Qtrn(0, 0) = 1.0 / ur_trn * (kx_ * ky_);
 	Qtrn(0, 1) = 1.0 / ur_trn * (er_trn * ur_trn - kx_ * kx_);
 	Qtrn(1, 0) = 1.0 / ur_trn * (ky_ * ky_ - ur_trn * er_trn);
@@ -189,7 +192,7 @@ void Device::TransmissionSlove()
 	Strn.S21 = 2.0 * Identity * inv(Atrn);
 	Strn.S22 = -inv(Atrn) * Btrn;
 
-	Global = SconnectRight(Global, Strn);
+	 SconnectRight(Global, Strn);
 
 	//Global.S11.print();
 	//Global.S12.print();
@@ -198,7 +201,7 @@ void Device::TransmissionSlove()
 	//Ok
 }
 
-void Device::RTsolve()
+RTsp Device::RTsolve( double theta )
 {
 	colvec s = { 0,1,0 };
 	colvec p = { -cos(theta) , 0 , sin(theta) };
@@ -222,6 +225,9 @@ void Device::RTsolve()
 	rowvec R = vectornorm(Eref);
 	rowvec T = vectornorm(Etrn) * real(kz_trn / ur_trn) / real(kz_inc / ur_inc);
 
+	//rowvec R = vecnorm(Eref);
+	//rowvec T = vecnorm(Etrn) * real(kz_trn / ur_trn) / real(kz_inc / ur_inc);
+
 	double Rs = R(0);
 	double Rp = R(1);
 
@@ -231,6 +237,58 @@ void Device::RTsolve()
 	cout << "Result£º" << endl;
 	cout << "Rs" << "+" << "Ts" << "=" << Rs << "+" << Ts << "=" << Rs + Ts << endl;
 	cout << "Rp" << "+" << "Tp" << "=" << Rp << "+" << Tp << "=" << Rp + Tp << endl;
+
+	return RTsp{ Rp , Rs , Tp , Ts };
+}
+
+void Device::TMMsweep()
+{
+	size_t n_theta = theta_list.size();
+	size_t n_lambda = lambda_list.size();
+
+	//theta_list.print();
+
+	mat Rs_sweep(n_lambda, n_theta);
+	mat Rp_sweep(n_lambda, n_theta);
+	mat Ts_sweep(n_lambda, n_theta);
+	mat Tp_sweep(n_lambda, n_theta);
+
+	double lambda, theta;
+	RTsp  result;
+	for(size_t i = 0; i < n_theta; i++)
+	{
+		theta = theta_list(i);
+		//cout << "theta : "  << theta << endl;
+
+		for (size_t j = 0; j < n_lambda; j++)
+		{
+			 
+			lambda = lambda_list(j);
+			//cout << "lambda : " << lambda << endl;
+
+			result=TMM(theta,  lambda);
+			Rs_sweep(j, i) = result.Rs;
+			Rp_sweep(j, i) = result.Rp;
+			Ts_sweep(j, i) = result.Ts;
+			Tp_sweep(j, i) = result.Tp;
+		}
+	}
+
+	system("mkdir Output");
+
+	Rs_sweep.save("Output/Rs.txt", raw_ascii);
+	Rp_sweep.save("Output/Rp.txt", raw_ascii);
+	Ts_sweep.save("Output/Ts.txt", raw_ascii);
+	Tp_sweep.save("Output/Tp.txt", raw_ascii);
+
+	//
+	theta_list = theta_list / pi * 180;
+	lambda_list = lambda_list / 1e-6;
+
+	theta_list.save("Output/theta.txt", raw_ascii);
+	lambda_list.save("Output/lambda.txt", raw_ascii);
+
+
 
 }
 

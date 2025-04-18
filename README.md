@@ -17,7 +17,9 @@ Visual Studio 2022安装Armadillo
 	cd vcpkg
 	.\bootstrap-vcpkg.bat
 	.\vcpkg install Armadillo
+    .\vcpkg install nlohmann-json
 	.\vcpkg integrate install
+
 
 ### 文件目录说明
 
@@ -42,39 +44,22 @@ Visual Studio 2022安装Armadillo
 {
     "device": [
         {
-            "thickness": 1e-6,
+            "thickness": 1e-6,  //第一层
             "indexReal": 1,
             "indexImag": 0.1
         },
+        .
+        .
+        .
         {
-            "thickness": 1e-6,
+            "thickness": 1e-6,  //第N-1层
             "indexReal": 2,
             "indexImag": 0.2
         },
         {
-            "thickness": 1e-6,
+            "thickness": 1e-6,  //第N层
             "indexReal": 3,
             "indexImag": 0.3
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 4,
-            "indexImag": 0.4
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 5,
-            "indexImag": 0.5
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 6,
-            "indexImag": 0.6
-        },
-        {
-            "thickness": 1e-6,
-            "indexReal": 7,
-            "indexImag": 0.7
         }
     ],
     "source": {
@@ -86,38 +71,65 @@ Visual Studio 2022安装Armadillo
 
 ```
 
-
-## 测试结果
+## 测试模型
 
 | Layer | thickness(um) | Index(Re) | Index(Im)|
 | ---|---|---|---|
-|  1| 1|1|0.1|
-|  2| 1|2|0.2|
-|  3| 1|3|0.3|
-|  4| 1|4|0.4|
-|  5| 1|5|0.5|
-|  6| 1|6|0.6|
-|  7| 1|7|0.7|
-
-使用TMMsolver的结果为
-![](images/result.png)
-
-
-
-| |C++| Lumerical |
-|---|---|---|
-|Rs|0.028934|0.028934|
-|Ts|1.45787e-10|1.45787e-10|
-|Rp|0.014718|0.014718|
-|Tp|1.56936e-10|1.56936e-10|
+|1| 1|1|0|
+|2|0.5|1.4|0|
+|3|0.1|3.4|0|
+|4|0.5|1.4|0|
+|5|1|0.05|3|
  
 
- ```
-C++
-Rs+Ts=0.028934+1.45787e-10=0.028934
-Rp+Tp=0.014718+1.56936e-10=0.014718
+### 波长扫描
 
-Lumerical
-Rs+Ts=0.028934 + 1.45787e-10 = 0.028934
-Rp+Tp=0.014718 + 1.56936e-10 = 0.014718
-```
+|theta min|theta max| theta points|
+|---|---|---|
+|30|30|1|
+
+|lambda min|lambda max| lambda points|
+|---|---|---|
+|1e-6|2e-6|100|
+
+![alt text](images/sy1_1.png)
+![alt text](images/sy1_2.png)
+
+### 角度扫描
+
+|theta min|theta max| theta points|
+|---|---|---|
+|0|89.9|100|
+
+|lambda min|lambda max| lambda points|
+|---|---|---|
+|1.5e-6|1.5e-6|1|
+
+![alt text](images/sy2_1.png)
+![alt text](images/sy2_2.png)
+
+### 复合扫描
+|theta min|theta max| theta points|
+|---|---|---|
+|0|60|4|
+
+|lambda min|lambda max| lambda points|
+|---|---|---|
+|1e-6|2e-6|100|
+
+![alt text](images/sy3_Rp.png)
+
+![alt text](images/sy3_Rs.png)
+
+![alt text](images/sy3_Tp.png)
+
+![alt text](images/sy3_Ts.png)
+
+### 结论
+从中可以看出，对于该结构，随着入射角的增大，Rp的谐振波长红移，Rs的谐振波长蓝移。
+
+
+## 总结
+
+有意思点个赞🤭
+🍆🍑😩👉👌💦

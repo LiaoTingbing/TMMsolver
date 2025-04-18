@@ -10,9 +10,13 @@ private:
 	cx_colvec Index;
 	cx_colvec ER;
 	colvec L;
-	double Lambda;
-	double theta;
-	double frequency;
+	//double Lambda;
+	//double theta;
+	//double theta_min, theta_max, theta_points;
+	//double lambda_min, lambda_max, lambda_points;
+	//double frequency;
+
+	vec theta_list,lambda_list,frequency_list;
 
 	colvec k_unit;
 	cx_double er_inc;
@@ -77,7 +81,8 @@ public:
 
 	void showLayers();
 
-	void initialize();
+	void initialize(double theta, double lambda);
+
 
 	void Incidence();
 
@@ -89,7 +94,29 @@ public:
 
 	void TransmissionSlove();
 
-	void RTsolve();
+	RTsp RTsolve(double theta);
+ 
+
+	// 内联
+	RTsp TMM(  double theta , double lambda , double frequency = 0 )
+	{
+
+		
+		 showLayers();
+
+		 cout << "波长 ：" << lambda << endl;
+		 cout << "角度 ：" << theta  << endl;
+
+		 initialize( theta,  lambda);
+		 Incidence();
+		 Gap();
+		 ReflectionSolve();
+		 LayerSolve();
+		 TransmissionSlove();
+		 return RTsolve(theta);
+	}
+
+	void TMMsweep();
 
 };
 
