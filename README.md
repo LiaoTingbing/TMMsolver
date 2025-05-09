@@ -6,37 +6,10 @@
 
 
 
-![](images/p1.png)
+![](examples1/examples1/images/p1.png)
 
 ## 使用
-使用Visual Studio 2022开发，C++矩阵计算库Armadillo。
-### 安装
-Visual Studio 2022安装Armadillo
-
-	git clone https://github.com/microsoft/vcpkg.git
-	cd vcpkg
-	.\bootstrap-vcpkg.bat
-	.\vcpkg install Armadillo
-    .\vcpkg install nlohmann-json
-	.\vcpkg integrate install
-
-
-### 文件目录说明
-
-```
-├─images
-├─src
-├─TMM
-│  └─x64
-│      ├─Debug
-│      │  └─TMM.tlog
-│      └─Release
-│          └─TMM.tlog
-└─x64
-    ├─Debug
-    └─Release
-```
-
+使用Visual Studio 2022开发，C++矩阵计算库Armadillo，CMAKE构建。
 
 ### 用法
 器件结构的输入文件为content.json，数据结构如下
@@ -92,8 +65,8 @@ Visual Studio 2022安装Armadillo
 |---|---|---|
 |1e-6|2e-6|100|
 
-![alt text](images/sy1_1.png)
-![alt text](images/sy1_2.png)
+![alt text](examples1/images/sy1_1.png)
+![alt text](examples1/images/sy1_2.png)
 
 ### 角度扫描
 
@@ -105,8 +78,8 @@ Visual Studio 2022安装Armadillo
 |---|---|---|
 |1.5e-6|1.5e-6|1|
 
-![alt text](images/sy2_1.png)
-![alt text](images/sy2_2.png)
+![alt text](examples1/images/sy2_1.png)
+![alt text](examples1/images/sy2_2.png)
 
 ### 复合扫描
 |theta min|theta max| theta points|
@@ -117,13 +90,13 @@ Visual Studio 2022安装Armadillo
 |---|---|---|
 |1e-6|2e-6|100|
 
-![alt text](images/sy3_Rp.png)
+![alt text](examples1/images/sy3_Rp.png)
 
-![alt text](images/sy3_Rs.png)
+![alt text](examples1/images/sy3_Rs.png)
 
-![alt text](images/sy3_Tp.png)
+![alt text](examples1/images/sy3_Tp.png)
 
-![alt text](images/sy3_Ts.png)
+![alt text](examples1/images/sy3_Ts.png)
 
 ### 结论
 从中可以看出，对于该结构，随着入射角的增大，反射率谐振波长蓝移，透射率红移。
